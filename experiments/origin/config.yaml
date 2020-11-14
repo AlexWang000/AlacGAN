@@ -1,5 +1,5 @@
-train_root: ../datasets
-val_root: ../datasets
+train_root: ../datasets/data
+val_root: ../datasets/data
 
 workers: 4
 batch_size: 4
