@@ -19,13 +19,13 @@ lrD: 0.0001
 lr_scheduler:
     type: STEP
 
-    lr_steps: [125000]
+    lr_steps: [12500]
     lr_mults: [0.1]
 
     base_lr: 0.0001
     warmup_steps: 0
     warmup_lr: 0
-    max_iter: 250000
+    max_iter: 25000
 
 
 diters: 1 # number of D iters per G iter
@@ -36,4 +36,4 @@ gpW: 10 # gradient penalty weight
 drift: 0.001 # wasserstein distance drift weight
 
 target_npz: resources/fid_stats_color.npz
-corps: 2 # num of corps per image for evaluation
+corps: 1 # num of corps per image for evaluation

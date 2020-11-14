@@ -11,7 +11,7 @@ import torch.utils.data as data
 import torchvision.transforms as transforms
 from PIL import Image
 from torch.utils.data.sampler import Sampler
-from torchvision.transforms import Scale, CenterCrop
+from torchvision.transforms import Resize, CenterCrop
 
 IMG_EXTENSIONS = [
     '.jpg', '.JPG', '.jpeg', '.JPEG',
@@ -87,7 +87,7 @@ class RandomSizedCrop(object):
                 return img.resize((self.size, self.size), self.interpolation)
 
         # Fallback
-        scale = Scale(self.size, interpolation=self.interpolation)
+        scale = Resize(self.size, interpolation=self.interpolation)
         crop = CenterCrop(self.size)
         return crop(scale(img))
 

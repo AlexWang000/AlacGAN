@@ -26,7 +26,7 @@ def make_dataset(root):
         for fname in fnames:
             if is_image_file(fname):
                 images.append(fname)
-    return images
+    return images[:100]
 
 
 def sketch_loader(path):
@@ -112,4 +112,4 @@ def CreateDataLoader(config):
 
     assert dataset
 # too big
-    return data.DataLoader(dataset, batch_size=4, shuffle=True, num_workers=4, drop_last=False)
+    return data.DataLoader(dataset, batch_size=5, shuffle=True, num_workers=5, drop_last=True)
