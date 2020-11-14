@@ -87,7 +87,7 @@ class ImageFolder(data.Dataset):
         Simg = sketch_loader(os.path.join(self.root, 'testB', fname))
         # why so many resize to 512
         # probably their model takes in 512 which is extremely bad...
-        # Simg = resize_by(Simg, 512.0)
+        Simg = resize_by(Simg, 512.0)
         if random.random() < 0.5:
             Simg = Simg.transpose(Image.FLIP_LEFT_RIGHT)
         Simg = self.stransform(Simg)

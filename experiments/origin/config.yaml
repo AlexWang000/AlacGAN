@@ -1,9 +1,9 @@
-train_root: ../datasets/data
-val_root: ../datasets/data
+train_root: datasets/data
+val_root: datasets/data
 
 workers: 4
 batch_size: 4
-image_size: 256
+image_size: 512
 
 val_freq: 5000
 print_freq: 1

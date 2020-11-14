@@ -225,7 +225,7 @@ class ImageFolder(data.Dataset):
         fname = self.imgs[index]
         Cimg = color_loader(os.path.join(self.root, 'trainA', fname))
         Simg = sketch_loader(os.path.join(self.root, 'trainB', fname))
-        
+
         # Cimg, Simg = RandomCrop(512)(Cimg, Simg)
         if random.random() < 0.5:
             Cimg, Simg = Cimg.transpose(Image.FLIP_LEFT_RIGHT), Simg.transpose(Image.FLIP_LEFT_RIGHT)
@@ -241,13 +241,13 @@ def CreateDataLoader(config):
     random.seed(config.seed)
 
     CTrans = transforms.Compose([
-        # transforms.Resize(config.image_size, Image.BICUBIC),
+        transforms.Resize(config.image_size, Image.BICUBIC),
         transforms.ToTensor(),
         transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
     ])
 
     VTrans = transforms.Compose([
-        RandomResizedCrop(config.image_size // 4, interpolation=Image.BICUBIC),
+        RandomsizedCrop(config.image_size // 4, interpolation=Image.BICUBIC),
         transforms.ToTensor(),
         transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
     ])
@@ -257,10 +257,11 @@ def CreateDataLoader(config):
         return x * ran + 1 - ran
 
     STrans = transforms.Compose([
-        # transforms.Resize(config.image_size, Image.BICUBIC),
+        transforms.Resize(config.image_size, Image.BICUBIC),
         transforms.ToTensor(),
         transforms.Lambda(jitter),
-        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+        # transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+        transforms.Normalize((0.5,), (0.5,))
     ])
 
     train_dataset = ImageFolder(root=config.train_root, transform=CTrans, vtransform=VTrans, stransform=STrans)
