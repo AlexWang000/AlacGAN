@@ -75,7 +75,7 @@ class RandomCrop(object):
 
 class ImageFolder(data.Dataset):
     def __init__(self, root, stransform=None):
-        imgs = make_dataset(root)
+        imgs = make_dataset(os.path.join(self.root, 'testB', fname))
         if len(imgs) == 0:
             raise (RuntimeError("Found 0 images in folders."))
         self.root = root
@@ -84,8 +84,10 @@ class ImageFolder(data.Dataset):
 
     def __getitem__(self, index):
         fname = self.imgs[index]  # random.randint(1, 3
-        Simg = sketch_loader(os.path.join(self.root, fname))
-        Simg = resize_by(Simg, 512.0)
+        Simg = sketch_loader(os.path.join(self.root, 'testB', fname))
+        # why so many resize to 512
+        # probably their model takes in 512 which is extremely bad...
+        # Simg = resize_by(Simg, 512.0)
         if random.random() < 0.5:
             Simg = Simg.transpose(Image.FLIP_LEFT_RIGHT)
         Simg = self.stransform(Simg)
@@ -100,7 +102,7 @@ def CreateDataLoader(config):
     random.seed(config.seed)
 
     STrans = transforms.Compose([
-        RandomCrop(512),
+        # RandomCrop(512),
         transforms.ToTensor(),
         transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
     ])

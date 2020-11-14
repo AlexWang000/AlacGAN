@@ -1,9 +1,9 @@
-train_root: ../datasets/Colorize_C
-val_root: ../datasets/lineart
+train_root: ../datasets
+val_root: ../datasets
 
 workers: 4
 batch_size: 4
-image_size: 512
+image_size: 256
 
 val_freq: 5000
 print_freq: 1

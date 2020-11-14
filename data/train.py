@@ -98,8 +98,7 @@ def is_image_file(filename):
 
 def make_dataset(root):
     images = []
-
-    for _, __, fnames in sorted(os.walk(os.path.join(root, 'color'))):
+    for _, __, fnames in sorted(os.walk(root)):
         for fname in fnames:
             if is_image_file(fname):
                 images.append(fname)
@@ -213,7 +212,7 @@ class GivenIterationSampler(Sampler):
 
 class ImageFolder(data.Dataset):
     def __init__(self, root, transform=None, vtransform=None, stransform=None):
-        imgs = make_dataset(root)
+        imgs = make_dataset(os.path.join(root, 'trainA'))
         if len(imgs) == 0:
             raise (RuntimeError("Found 0 images in folders."))
         self.root = root
@@ -224,12 +223,12 @@ class ImageFolder(data.Dataset):
 
     def __getitem__(self, index):
         fname = self.imgs[index]
-        Cimg = color_loader(os.path.join(self.root, 'color', fname))
-        Simg = sketch_loader(os.path.join(self.root, str(random.randint(0, 2)), fname))
-        Cimg, Simg = RandomCrop(512)(Cimg, Simg)
+        Cimg = color_loader(os.path.join(self.root, 'trainA', fname))
+        Simg = sketch_loader(os.path.join(self.root, 'trainB', fname))
+        
+        # Cimg, Simg = RandomCrop(512)(Cimg, Simg)
         if random.random() < 0.5:
             Cimg, Simg = Cimg.transpose(Image.FLIP_LEFT_RIGHT), Simg.transpose(Image.FLIP_LEFT_RIGHT)
-
         Cimg, Vimg, Simg = self.transform(Cimg), self.vtransform(Cimg), self.stransform(Simg)
 
         return Cimg, Vimg, Simg
@@ -241,15 +240,14 @@ class ImageFolder(data.Dataset):
 def CreateDataLoader(config):
     random.seed(config.seed)
 
-    # folder dataset
     CTrans = transforms.Compose([
-        transforms.Scale(config.image_size, Image.BICUBIC),
+        # transforms.Resize(config.image_size, Image.BICUBIC),
         transforms.ToTensor(),
         transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
     ])
 
     VTrans = transforms.Compose([
-        RandomSizedCrop(config.image_size // 4, Image.BICUBIC),
+        RandomResizedCrop(config.image_size // 4, interpolation=Image.BICUBIC),
         transforms.ToTensor(),
         transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
     ])
@@ -259,7 +257,7 @@ def CreateDataLoader(config):
         return x * ran + 1 - ran
 
     STrans = transforms.Compose([
-        transforms.Scale(config.image_size, Image.BICUBIC),
+        # transforms.Resize(config.image_size, Image.BICUBIC),
         transforms.ToTensor(),
         transforms.Lambda(jitter),
         transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
