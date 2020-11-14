@@ -75,10 +75,10 @@ class RandomCrop(object):
 
 class ImageFolder(data.Dataset):
     def __init__(self, root, stransform=None):
-        imgs = make_dataset(os.path.join(self.root, 'testB', fname))
+        self.root = root
+        imgs = make_dataset(os.path.join(self.root, 'testB'))
         if len(imgs) == 0:
             raise (RuntimeError("Found 0 images in folders."))
-        self.root = root
         self.imgs = imgs
         self.stransform = stransform
 
@@ -104,11 +104,12 @@ def CreateDataLoader(config):
     STrans = transforms.Compose([
         # RandomCrop(512),
         transforms.ToTensor(),
-        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+        # transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+        transforms.Normalize((0.5,), (0.5,))
     ])
 
     dataset = ImageFolder(root=config.val_root, stransform=STrans)
 
     assert dataset
-
-    return data.DataLoader(dataset, batch_size=64, shuffle=True, num_workers=10, drop_last=False)
+# too big
+    return data.DataLoader(dataset, batch_size=4, shuffle=True, num_workers=4, drop_last=False)

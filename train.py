@@ -11,7 +11,7 @@ import torch.backends.cudnn as cudnn
 import torch.optim as optim
 import torchvision.utils as vutils
 import numpy as np
-from tensorboardX import SummaryWriter
+from torch.utils.tensorboard import SummaryWriter
 from torch.autograd import grad
 from easydict import EasyDict
 
