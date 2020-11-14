@@ -122,6 +122,8 @@ class InceptionV3(nn.Module):
         x = inp
 
         if self.resize_input:
+            # x is 1D but size is 2d???
+            # why tf would x be 1d?
             x = F.upsample(x, size=(299, 299), mode='bilinear')
 
         if self.normalize_input:

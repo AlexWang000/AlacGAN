@@ -123,7 +123,7 @@ def calculate_fid(netG, netI, dataloader, config, dims):
             with torch.no_grad():
                 feat_sim = netI(real_sim)
                 fake_cim = netG(real_sim, zhint, feat_sim).squeeze()
-                pred = model(adaptive_avg_pool2d(fake_cim.mul(0.5).add(0.5), output_size=299))[0]
+                pred = model(adaptive_avg_pool2d(fake_cim.mul(0.5).add(0.5), output_size=(299, 299)))[0]
 
             # If model output is not scalar, apply global spatial average pooling.
             # This happens if you choose a dimensionality not equal 2048.
