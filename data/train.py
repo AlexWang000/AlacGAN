@@ -247,7 +247,7 @@ def CreateDataLoader(config):
     ])
 
     VTrans = transforms.Compose([
-        RandomsizedCrop(config.image_size // 4, interpolation=Image.BICUBIC),
+        RandomSizedCrop(config.image_size // 4, interpolation=Image.BICUBIC),
         transforms.ToTensor(),
         transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
     ])
