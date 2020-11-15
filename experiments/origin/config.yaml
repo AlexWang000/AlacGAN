@@ -1,8 +1,8 @@
 train_root: dataset
 val_root: dataset
 
-workers: 4
-batch_size: 4
+workers: 8
+batch_size: 8
 image_size: 512
 
 val_freq: 5000
