@@ -23,7 +23,7 @@ from models.standard import *
 parser = argparse.ArgumentParser(description='PyTorch Colorization Training')
 
 parser.add_argument('--config', default='experiments/origin/config.yaml')
-parser.add_argument('--resume', default='', type=str, help='path to checkpoint')
+parser.add_argument('--resume', default='', type=str, help='path to checkpoint, should be experiments/origin/')
 
 
 def calc_gradient_penalty(netD, real_data, fake_data, sketch_feat):
