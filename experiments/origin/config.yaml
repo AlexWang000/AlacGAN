@@ -1,8 +1,8 @@
 train_root: dataset
 val_root: dataset
 
-workers: 32
-batch_size: 32
+workers: 8
+batch_size: 16
 image_size: 512
 
 val_freq: 100
@@ -25,7 +25,7 @@ lr_scheduler:
     base_lr: 0.0001
     warmup_steps: 0
     warmup_lr: 0
-    max_iter: 2500
+    max_iter: 5000
 
 
 diters: 1 # number of D iters per G iter
