@@ -3,7 +3,7 @@ val_root: dataset
 
 workers: 8
 batch_size: 32
-image_size: 256
+image_size: 512
 
 val_freq: 100
 print_freq: 1
