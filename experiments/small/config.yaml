@@ -1,11 +1,11 @@
 train_root: dataset
 val_root: dataset
 
-workers: 32
-batch_size: 4
-image_size: 512
+workers: 8
+batch_size: 32
+image_size: 256
 
-val_freq: 10
+val_freq: 100
 print_freq: 1
 print_img_freq: 1
 
@@ -19,13 +19,13 @@ lrD: 0.0001
 lr_scheduler:
     type: STEP
 
-    lr_steps: [125]
+    lr_steps: [12500]
     lr_mults: [0.1]
 
     base_lr: 0.0001
     warmup_steps: 0
     warmup_lr: 0
-    max_iter: 200
+    max_iter: 1000
 
 
 diters: 1 # number of D iters per G iter
